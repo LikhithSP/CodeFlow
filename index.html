@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeFlow - Modern Online Compiler</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.40.0/min/vs/loader.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="min-h-screen transition-all duration-300">
+    <!-- Navigation Header -->
+    <nav class="bg-white dark:bg-gray-900 shadow-sm border-b border-gray-200 dark:border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-4">
+                    <div class="flex items-center">
+                        <i class="fas fa-code text-2xl text-blue-600 dark:text-blue-400"></i>
+                        <h1 class="ml-3 text-xl font-bold text-gray-900 dark:text-white">CodeFlow</h1>
+                    </div>
+                    <span class="hidden sm:block text-sm text-gray-500 dark:text-gray-400">Modern Online Compiler</span>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <!-- Theme Toggle -->
+                    <button id="theme-toggle" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                        <i class="fas fa-moon dark:hidden"></i>
+                        <i class="fas fa-sun hidden dark:block"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <!-- Language Selection and Controls -->
+        <div class="bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 mb-6">
+            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <!-- Language Selector -->
+                    <div class="flex items-center space-x-3">
+                        <label for="language" class="text-sm font-medium text-gray-700 dark:text-gray-300">Language:</label>
+                        <select id="language" class="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 min-w-[140px]">
+                            <option value="python">Python</option>
+                            <option value="javascript">JavaScript</option>
+                            <option value="java">Java</option>
+                            <option value="cpp">C++</option>
+                            <option value="c">C</option>
+                        </select>
+                    </div>
+
+                    <!-- Theme Selector -->
+                    <div class="flex items-center space-x-3">
+                        <label for="editor-theme" class="text-sm font-medium text-gray-700 dark:text-gray-300">Theme:</label>
+                        <select id="editor-theme" class="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 min-w-[120px]">
+                            <option value="vs-light">Light</option>
+                            <option value="vs-dark">Dark</option>
+                            <option value="hc-black">High Contrast</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex items-center space-x-3">
+                    <button id="run-btn" class="inline-flex items-center px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                        <i class="fas fa-play mr-2"></i>
+                        Run Code
+                    </button>
+                    <button id="clear-btn" class="inline-flex items-center px-4 py-2.5 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors duration-200">
+                        <i class="fas fa-trash mr-2"></i>
+                        Clear
+                    </button>
+                    <button id="sample-btn" class="inline-flex items-center px-4 py-2.5 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-colors duration-200">
+                        <i class="fas fa-code mr-2"></i>
+                        Sample
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Editor and Output Layout -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- Code Editor Section -->
+            <div class="space-y-4">
+                <!-- Editor -->
+                <div class="bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
+                    <div class="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-code text-blue-600 dark:text-blue-400"></i>
+                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Code Editor</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <button id="fullscreen-btn" class="p-1.5 rounded hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400">
+                                <i class="fas fa-expand"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div id="editor" class="h-96 lg:h-[500px]"></div>
+                </div>
+
+            </div>
+
+            <!-- Output Section -->
+            <div class="space-y-4">
+                <!-- Input Section (moved above output) -->
+                <div class="bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
+                    <div class="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-keyboard text-green-600 dark:text-green-400"></i>
+                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Program Input</span>
+                        </div>
+                        <button id="sample-input-btn" class="text-xs px-2 py-1 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 rounded hover:bg-green-200 dark:hover:bg-green-800 transition-colors">
+                            Sample Input
+                        </button>
+                    </div>
+                    <div class="p-4">
+                        <textarea id="input" class="w-full h-24 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none font-mono text-sm" 
+                                  placeholder="Enter input for programs that use input(), scanf(), cin, etc.
+Example: If your code asks for name, enter: John
+For multiple inputs, put each on a new line."></textarea>
+                    </div>
+                </div>
+
+                <!-- Output Display -->
+                <div class="bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 flex-1">
+                    <div class="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-terminal text-purple-600 dark:text-purple-400"></i>
+                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Output</span>
+                        </div>
+                        <button id="copy-output" class="p-1.5 rounded hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400" title="Copy Output">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+                    <div class="p-4">
+                        <pre id="output" class="bg-gray-900 dark:bg-black text-green-400 p-4 rounded-lg h-96 lg:h-[500px] overflow-auto font-mono text-sm whitespace-pre-wrap">Welcome to CodeFlow! 
+Select a language and start coding...
+
+Features:
+✓ Real-time syntax highlighting
+✓ Multiple programming languages
+✓ Instant code execution
+✓ Clean, modern interface
+✓ Dark/Light theme support</pre>
+                    </div>
+                </div>
+
+                <!-- Execution Status (moved below output) -->
+                <div class="bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-info-circle text-blue-600 dark:text-blue-400"></i>
+                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Status</span>
+                        </div>
+                        <div id="execution-time" class="text-xs text-gray-500 dark:text-gray-400"></div>
+                    </div>
+                    <div id="status" class="mt-2 text-sm text-gray-600 dark:text-gray-400">Ready to run your code</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading Overlay -->
+        <div id="loading-overlay" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+            <div class="bg-white dark:bg-gray-800 rounded-xl p-8 flex items-center space-x-4">
+                <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+                <span class="text-gray-700 dark:text-gray-300 font-medium">Executing code...</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-12 py-8 border-t border-gray-200 dark:border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center text-gray-500 dark:text-gray-400">
+                <p class="text-sm">Powered by Judge0 API • Built for developers who love clean code</p>
+                <p class="text-xs mt-2">Execute code online without the hassle of local setup</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
