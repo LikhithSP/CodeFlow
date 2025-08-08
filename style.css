@@ -251,26 +251,44 @@ button:disabled {
         grid-template-columns: 1fr;
     }
     #editor {
-        height: 300px !important;
+        height: 240px !important;
     }
     #output {
-        height: 300px !important;
+        height: 200px !important;
     }
 }
 
 @media (max-width: 640px) {
     .max-w-7xl {
-        padding-left: 1rem;
-        padding-right: 1rem;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
     }
-    
     .flex-col.sm\\:flex-row {
         flex-direction: column;
-        gap: 1rem;
+        gap: 0.5rem;
     }
-    
-    .grid.gap-6 {
-        gap: 1rem;
+    .grid.gap-6, .grid.gap-4 {
+        gap: 0.5rem;
+    }
+    #editor {
+        height: 140px !important;
+        min-height: 100px !important;
+    }
+    #output {
+        height: 100px !important;
+        min-height: 60px !important;
+    }
+    .rounded-xl {
+        border-radius: 0.75rem;
+    }
+    .p-4 {
+        padding: 0.75rem !important;
+    }
+    .p-2 {
+        padding: 0.5rem !important;
+    }
+    .h-96, .lg\:h-\[500px\] {
+        height: 180px !important;
     }
 }
 
