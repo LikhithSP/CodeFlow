@@ -674,7 +674,7 @@ int main() {
     }
     
     showWelcomeMessage() {
-        const output = `🚀 Welcome to CodeRunner - Modern Online Compiler!
+        const output = `🚀 Welcome to CodeFlow - Modern Online Compiler!
 
 ✨ Features:
 • Support for Python, JavaScript, Java, C++, and C
@@ -717,3 +717,4 @@ Ready to code? Select a language and start building! 🎯`;
 document.addEventListener('DOMContentLoaded', () => {
     new CodeRunner();
 });
+
