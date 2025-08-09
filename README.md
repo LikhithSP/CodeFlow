@@ -99,13 +99,6 @@ The application supports extensive theming through CSS variables in `style.css`.
 - Spacing and layout
 - Animations and transitions
 
-## 🔧 Browser Support
-
-- **Chrome/Chromium**: Full support
-- **Firefox**: Full support
-- **Safari**: Full support
-- **Edge**: Full support
-- **Mobile browsers**: Responsive design optimized for touch
 
 ## 🌟 Pro Tips
 
@@ -125,13 +118,6 @@ The application supports extensive theming through CSS variables in `style.css`.
    - Touch-friendly interface
    - Responsive layout adapts to screen size
 
-## 🚀 Performance Optimizations
-
-- Lazy loading of Monaco Editor
-- Efficient API polling
-- Optimized CSS with minimal reflows
-- Cached theme preferences
-- Debounced user interactions
 
 ## 🔒 Security
 
@@ -140,13 +126,7 @@ The application supports extensive theming through CSS variables in `style.css`.
 - API keys should be secured on production deployments
 - Input sanitization and validation
 
-## 📱 Mobile Experience
 
-The application is fully responsive and optimized for mobile devices:
-- Touch-friendly buttons and controls
-- Optimized editor experience for mobile
-- Responsive grid layout
-- Mobile-specific CSS optimizations
 
 ## 🤝 Contributing
 
@@ -180,4 +160,5 @@ If you encounter any issues or have questions:
 ---
 
 **Happy Coding! 🎯**
+
 
